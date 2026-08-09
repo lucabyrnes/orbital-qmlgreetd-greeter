@@ -6,7 +6,7 @@ xdata = pkgtype=pkg
 pkgver = 0.1.0-1
 pkgdesc = Qt Quick Wayland greeter for greetd
 url = https://github.com/Makotastic/qmlgreet
-builddate = 1786316874
+builddate = 1786317373
 packager = Unknown Packager
 size = 8758563
 arch = x86_64

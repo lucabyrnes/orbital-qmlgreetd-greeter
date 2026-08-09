@@ -148,14 +148,9 @@ void AuthWrapper::startSession(const QString &cmd)
         return;
     }
 
-    // Run the selected session without exposing its startup diagnostics on the
-    // greeter VT after Cage exits. User-session services still log to journal.
+    // Split the command string into executable and arguments for greetd.
     QStringList args = QProcess::splitCommand(cmd);
     QJsonArray cmdArray;
-    cmdArray.append("/bin/sh");
-    cmdArray.append("-c");
-    cmdArray.append("exec \"$@\" >/dev/null 2>&1");
-    cmdArray.append("orbital-greeter-session");
     for (const QString &arg : args) {
         cmdArray.append(arg);
     }
