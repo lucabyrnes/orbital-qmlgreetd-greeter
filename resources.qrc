@@ -1,9 +1,34 @@
 <!DOCTYPE RCC>
 <RCC>
     <qresource prefix="/resources">
-        <file>qml/main.qml</file>
-    </qresource>
-    <qresource prefix="/icons">
-        <file alias="user-avatar.svg">icons/user-avatar.svg</file>
+        <file>qml/Main.qml</file>
+        <file>qml/components/AuthenticationOverlay.qml</file>
+        <file>qml/components/AuthorizationPopup.qml</file>
+        <file>qml/components/DishGlyph.qml</file>
+        <file>qml/components/GlobeScene.qml</file>
+        <file>qml/components/HeaderBar.qml</file>
+        <file>qml/components/InstrumentPane.qml</file>
+        <file>qml/components/LoginTerminal.qml</file>
+        <file>qml/components/OrbitOverlay.qml</file>
+        <file>qml/components/OrbitalMath.js</file>
+        <file>qml/components/ProtocolFooter.qml</file>
+        <file>qml/components/SatelliteTag.qml</file>
+        <file>qml/components/SystemStatusCard.qml</file>
+        <file>qml/components/TerminalDropDown.qml</file>
+        <file>qml/components/TerminalField.qml</file>
+        <file>qml/screens/LoginScreen.qml</file>
+        <file>qml/assets/earth_day.jpg</file>
+        <file>qml/assets/earth_night.jpg</file>
+        <file>qml/assets/earth_roughness.jpg</file>
+        <file>qml/assets/globe_asset.png</file>
+        <file>qml/assets/noise-512.png</file>
+        <file>qml/assets/Sheild.png</file>
+        <file>qml/assets/star_background.jpg</file>
+        <file>qml/assets/power-hibernate.svg</file>
+        <file>qml/assets/power-restart.svg</file>
+        <file>qml/assets/power-shutdown.svg</file>
+        <file>qml/assets/power-suspend.svg</file>
+        <file>qml/shaders/atmosphere.frag</file>
+        <file>qml/shaders/atmosphere.vert</file>
     </qresource>
 </RCC>

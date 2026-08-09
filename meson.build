@@ -1,5 +1,5 @@
 project(
-	'QmlGreet',
+	'OrbitalGreeter',
 	['c', 'cpp'],
 	version: '0.1',
 	license: 'MIT',
@@ -31,18 +31,6 @@ qt_deps = dependency('qt6',
         'DBus'
     ],
     required: true
-)
-
-# Qt6Core5Compat for Qt5Compat.GraphicalEffects
-qt6_core5compat = dependency('Qt6Core5Compat', version: '>=6.9', required: true)
-
-# MauiKit4 library - required for QML plugin types to work
-# The QML plugin needs the main library to be loaded for type registration
-# Force link with --no-as-needed to ensure the library is loaded at runtime
-mauikit_dep = dependency('MauiKit4', version: '>=4.0.4', required: true)
-mauikit_lib = declare_dependency(
-    dependencies: mauikit_dep,
-    link_args: ['-Wl,--no-as-needed']
 )
 
 # Get Qt version for private headers path
@@ -133,10 +121,10 @@ qml_resources = qt_mod.compile_resources(
 )
 
 executable(
-    'qmlgreet',
+    'orbital-greeter',
     sources + protocol_srcs + moc_files,
     qml_resources,
-    dependencies: [qt_deps, qt6_core5compat, thread_dep, wl_client_dep, mauikit_lib],
+    dependencies: [qt_deps, thread_dep, wl_client_dep],
     include_directories: qt_private_include,
     install: true
 )

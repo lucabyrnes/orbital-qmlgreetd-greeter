@@ -1,59 +1,31 @@
-# QMLGreet | [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+# Orbital Greeter
 
-QML-based greeter for greetd and wlr-based compositors.
+Orbital Greeter is a Wayland-native Qt 6 login greeter for `greetd`. It keeps
+the greetd, session discovery, power, battery, and Layer Shell backend from
+its upstream foundation while providing a fully custom orbital interface.
 
-![QMLGreet](https://nxos.org/wp-content/uploads/2026/01/screenshot-20260130-005834.png)
-> QMLGreet, a QML-based greeter.
+## Development
 
-# Introduction
-
-QMLGreet is a modern, lightweight greeter (login screen) designed for `greetd`. Built with **[MauiKit](https://mauikit.org/)** to deliver a polished, consistent user interface.
-
-QMLGreet runs natively on Wayland compositors (such as Hyprland or Sway) using the Layer Shell protocol.
-
-> [!WARNING]
-> QMLGreet does not support X11. QMLGreet's main target is Nitrux OS, and using it in other distributions is not within its scope. Please do not open issues regarding this use case; they will be closed.
-
-## Features
-
-- Wayland-native: Integrates seamlessly with wlroots-based compositors via the `wlr-layer-shell-unstable-v1` protocol.
-- Configurable: 
-    * Customize the look and feel via `/etc/qmlgreet/qmlgreet.conf`.
-    * Supports standard `.colors` schemes (KDE style).
-    * Configurable font family and base font size.
-    * Support for custom icon themes.
-    * Set custom wallpapers with automatic blur effects.
-    * Configure a shared avatar image or a per-user avatar path pattern.
-- Session Management:
-    * Automatic discovery of Wayland sessions from XDG data directories.
-    * Filters out hidden sessions.
-    * Direct D-Bus integration with `logind || elogind`.
-    * Dynamically hides system actions unsupported by the host hardware.
-    * Native battery monitor showing percentage and charging status (visible only when a battery is detected).
-- Performance:
-    * Optimized C++ backend.
-    * Built with `x86-64-v3` optimizations for modern hardware.
-
-### Runtime Requirements
-
-```
-mauikit (>= 4.0.3)
-qt6 (>= 6.9.2)
-qt6-wayland (>= 6.9.2)
-greetd
-wayland
+```bash
+meson setup build --wipe --buildtype=debug
+meson compile -C build
+./build/orbital-greeter --config ./config/orbital-greeter.conf.example
 ```
 
-# Licensing
+When `GREETD_SOCK` is not set, the greeter uses its built-in mock
+authentication flow. Enter `fail` to exercise the failed-authentication UI;
+any other response exercises a successful mock login.
 
-The license for this repository and its contents is **BSD-3-Clause**.
+## Requirements
 
-# Issues
+- Qt 6: Core, Quick, Quick Controls, Wayland Client, and DBus
+- greetd
+- Wayland with the `wlr-layer-shell-unstable-v1` protocol
+- Meson, a C++17 compiler, and `wayland-scanner`
 
-If you find problems with the contents of this repository, please create an issue and use the **🐞 Bug report** template.
+Use `config/orbital-greeter.conf.example` as the basis for the system
+configuration at `/etc/orbital-greeter/orbital-greeter.conf`.
 
-## Submitting a bug report
+## License
 
-Before submitting a bug, you should look at the [existing bug reports](https://github.com/Nitrux/qmlgreet/issues) to verify that no one has reported the bug already.
-
-©2026 Nitrux Latinoamericana S.C.
+This fork retains the upstream BSD-3-Clause license in `LICENSE`.

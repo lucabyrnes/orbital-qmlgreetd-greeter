@@ -106,10 +106,16 @@ void AuthWrapper::cancel()
     }
 
     if (m_socket->state() == QLocalSocket::ConnectedState) {
+        m_canceling = true;
+        m_processing = true;
+        emit processingChanged();
+
         QJsonObject json;
         json["type"] = "cancel_session";
         sendCommand(json);
+        return;
     }
+
     reset();
 }
 
@@ -255,26 +261,14 @@ void AuthWrapper::onReadyRead()
 
 void AuthWrapper::processMessage(const QJsonObject &json)
 {
-    qDebug() << "AuthWrapper: Received message from greetd:" << QJsonDocument(json).toJson(QJsonDocument::Compact);
-
     QString type = json["type"].toString();
 
     if (type == "success") {
         if (m_canceling) {
-            // Successfully canceled the session after an error
-            qDebug() << "AuthWrapper: Session canceled successfully, resetting for retry";
-            m_canceling = false;
-            m_processing = false;
-            m_prompt = "";
-
-            // Close and reset the socket to allow fresh login attempts
-            if (m_socket->state() == QLocalSocket::ConnectedState) {
+            // A canceled session must never be interpreted as an authenticated login.
+            if (m_socket->state() == QLocalSocket::ConnectedState)
                 m_socket->disconnectFromServer();
-            }
-
-            emit processingChanged();
-            emit promptChanged();
-            // Don't emit loginSucceeded - the error was already set
+            reset();
             return;
         }
 
@@ -369,6 +363,7 @@ void AuthWrapper::reset()
     m_isMock = false;
 
     emit promptChanged();
+    emit errorChanged();
     emit processingChanged();
 }
 
@@ -405,7 +400,7 @@ QStringList AuthWrapper::prepareEnv()
     if (qEnvironmentVariableIsSet("XDG_VTNR"))
         env << "XDG_VTNR=" + QString::fromLocal8Bit(qgetenv("XDG_VTNR"));
 
-    // 4. Force Wayland session type (recommended for Nitrux/Maui)
+    // 4. Ensure greetd starts a Wayland session.
     env << "XDG_SESSION_TYPE=wayland";
 
     return env;
