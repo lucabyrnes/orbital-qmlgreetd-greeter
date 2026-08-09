@@ -11,6 +11,7 @@
 #include <QCoreApplication>
 #include <QSettings>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 
 AuthWrapper::AuthWrapper(QObject *parent)
@@ -174,6 +175,12 @@ void AuthWrapper::startSession(const QString &cmd)
     if (!envArray.isEmpty()) {
         json["env"] = envArray;
     }
+
+    // Cage's framebuffer disappears before the desktop draws its first frame.
+    // Clear the console underneath it so boot output is not exposed meanwhile.
+    QFile tty("/dev/tty");
+    if (tty.open(QIODevice::WriteOnly | QIODevice::Unbuffered))
+        tty.write("\033[H\033[2J\033[3J\033[?25l");
 
     sendCommand(json);
 }

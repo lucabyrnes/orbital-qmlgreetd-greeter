@@ -7,3 +7,8 @@
 *.db
 *.qmlc
 *build/
+
+# Arch package output
+/packaging/arch/pkg/
+/packaging/arch/src/
+/packaging/arch/*.pkg.tar.*

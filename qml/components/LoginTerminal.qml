@@ -196,6 +196,16 @@ Item {
     }
 
     Timer {
+        id: sessionStartTimer
+        interval: 1000
+        repeat: false
+        onTriggered: {
+            if (root.pendingSessionCommand !== "")
+                root.auth.startSession(root.pendingSessionCommand)
+        }
+    }
+
+    Timer {
         id: feedbackResetTimer
         interval: 1850
         repeat: false
@@ -208,16 +218,6 @@ Item {
                 passwordField.forceActiveFocus()
             else
                 root.beginLogin()
-        }
-    }
-
-    Timer {
-        id: sessionStartTimer
-        interval: 2000
-        repeat: false
-        onTriggered: {
-            if (root.pendingSessionCommand !== "")
-                root.auth.startSession(root.pendingSessionCommand)
         }
     }
 
