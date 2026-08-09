@@ -128,3 +128,9 @@ executable(
     include_directories: qt_private_include,
     install: true
 )
+
+install_data(
+    'config/orbital-greeter.conf.example',
+    install_dir: get_option('sysconfdir') / 'orbital-greeter',
+    rename: 'orbital-greeter.conf'
+)

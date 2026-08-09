@@ -1,0 +1,33 @@
+pkgname=orbital-greeter
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Qt Quick Wayland greeter for greetd"
+arch=('x86_64')
+url='https://github.com/Makotastic/qmlgreet'
+license=('BSD-3-Clause')
+depends=(
+    'cage'
+    'greetd'
+    'qt6-base'
+    'qt6-declarative'
+    'qt6-quick3d'
+    'qt6-wayland'
+    'wayland'
+)
+makedepends=(
+    'meson'
+    'ninja'
+    'pkgconf'
+    'wayland'
+)
+source=()
+sha256sums=()
+
+build() {
+    meson setup "$srcdir/build" "$startdir/../.." --prefix=/usr --sysconfdir=/etc --buildtype=release
+    meson compile -C "$srcdir/build"
+}
+
+package() {
+    meson install -C "$srcdir/build" --destdir "$pkgdir"
+}

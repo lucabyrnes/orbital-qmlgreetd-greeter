@@ -148,15 +148,19 @@ void AuthWrapper::startSession(const QString &cmd)
         return;
     }
 
-    // Split the command string into executable + args
-    // e.g. "dbus-run-session sway" becomes ["dbus-run-session", "sway"]
+    // Run the selected session without exposing its startup diagnostics on the
+    // greeter VT after Cage exits. User-session services still log to journal.
     QStringList args = QProcess::splitCommand(cmd);
     QJsonArray cmdArray;
+    cmdArray.append("/bin/sh");
+    cmdArray.append("-c");
+    cmdArray.append("exec \"$@\" >/dev/null 2>&1");
+    cmdArray.append("orbital-greeter-session");
     for (const QString &arg : args) {
         cmdArray.append(arg);
     }
 
-    qDebug() << "AuthWrapper: Command split into" << args.size() << "arguments:" << args;
+    qDebug() << "AuthWrapper: Starting selected session";
 
     // Prepare environment variables
     QStringList envList = prepareEnv();

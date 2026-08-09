@@ -1,0 +1,8 @@
+[terminal]
+vt = 1
+
+[default_session]
+# Cage supplies the dedicated Wayland compositor for the greeter. Do not run
+# the user's Hyprland session as the display-manager compositor.
+command = "cage -s -- /usr/bin/orbital-greeter"
+user = "greeter"
