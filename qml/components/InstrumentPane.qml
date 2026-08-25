@@ -10,7 +10,6 @@ Item {
     property color surfaceMiddle: "#F009131C"
     property color surfaceBottom: "#F2050D15"
     property color outlineColor: "#52667884"
-    property url noiseSource: "../assets/noise-512.png"
     property real contentMargin: 20
 
     default property alias content: contentContainer.data
@@ -67,14 +66,6 @@ Item {
                 GradientStop { position: 0.75; color: "#0E5A7888" }
                 GradientStop { position: 1.0; color: "#001A9DB5" }
             }
-        }
-
-        Image {
-            anchors.fill: parent
-            source: root.noiseSource
-            fillMode: Image.PreserveAspectCrop
-            opacity: 0.25
-            smooth: false
         }
 
         Rectangle {
